@@ -3,7 +3,7 @@ public class UserProfileResponse : BaseEntity
 {
     public string Login { get; set; }
 
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     public string? VkLink { get; set; }
 
@@ -12,4 +12,6 @@ public class UserProfileResponse : BaseEntity
     public string? Description { get; set; }
 
     public string? Photo { get; set; }
+
+    public ICollection<ProjectEntity>? Projects { get; set; }
 }

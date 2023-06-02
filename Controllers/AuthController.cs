@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 namespace digital_portfolio.Controllers;
 
@@ -80,5 +81,31 @@ public class AuthController : ControllerBase
         await _userRepository.Add(user);
 
         return await Login(new AuthRequest() { Login = request.Login, Password = request.Password });
+    }
+
+    [Authorize]
+    [HttpPost("change-password")]
+    public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest("Invalid Model State");
+
+        var id = HttpContext.User.FindFirstValue("id");
+        var user = _context.Users.FindAsync(id).Result;
+
+        if (request.NewPassword != request.ConfirmNewPassword)
+            return BadRequest("Passwords are different");
+
+        if (request.NewPassword == request.OldPassword)
+            return BadRequest("Old and new passwords are same");
+
+        if (!_hasher.VerifyPassword(request.OldPassword, user.Password))
+            return BadRequest("Old password is wrong");
+
+        user.Password = _hasher.HashPassword(request.NewPassword);
+
+        await _context.SaveChangesAsync();
+
+        return Ok("Password successfully changed");
     }
 }

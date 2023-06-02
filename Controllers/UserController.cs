@@ -12,11 +12,11 @@ namespace digital_portfolio.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UserController : ControllerBase
+public class UsersController : ControllerBase
 {
     private readonly DataContext _context;
 
-    public UserController(DataContext context)
+    public UsersController(DataContext context)
     {
         _context = context;
     }
@@ -43,7 +43,7 @@ public class UserController : ControllerBase
     }
 
     [Authorize]
-    [HttpPost("update-info")]
+    [HttpPost("update")]
     public async Task<ActionResult> UpdateUserInfo([FromBody] UserUpdateRequest updatedUser)
     {
         var id = HttpContext.User.FindFirstValue("id");
@@ -59,6 +59,32 @@ public class UserController : ControllerBase
         await _context.SaveChangesAsync();
 
         return Ok("User info updated");
+    }
+
+    [AllowAnonymous]
+    [HttpGet("id/{id}")]
+    public async Task<ActionResult> GetUserById(string id)
+    {
+        var user = _context.Users.FindAsync(id).Result;
+
+        if (user == null)
+            return BadRequest("User not found");
+
+        var userProjects = _context.Projects.Where(x => x.AuthorID == id).ToList();
+
+        var response = new UserProfileResponse()
+        {
+            Description = user.Description,
+            Photo = user.Photo,
+            TelegramLink = user.TelegramLink,
+            Id = user.Id,
+            Login = user.Login,
+            Name = user.Name,
+            VkLink = user.VkLink,
+            Projects = userProjects
+        };
+
+        return Ok(response);
     }
 }
 

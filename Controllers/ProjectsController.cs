@@ -69,5 +69,17 @@ public class ProjectsController : ControllerBase
 
         return Ok(request.Technologies);
     }
+
+    [AllowAnonymous]
+    [HttpGet("id/{id}")]
+    public async Task<ActionResult> GetProjectByid(string id)
+    {
+        var project = _context.Projects.FindAsync(id).Result;
+
+        if (project == null)
+            return BadRequest("Project not found");
+
+        return Ok(project);
+    }
 }
 
