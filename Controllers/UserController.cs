@@ -1,12 +1,9 @@
-﻿using System.Security.Claims;
-using digital_portfolio.Data;
+﻿using digital_portfolio.Data;
 using digital_portfolio.Data.Entities;
 using digital_portfolio.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace digital_portfolio.Controllers;
 
@@ -26,11 +23,11 @@ public class UsersController : ControllerBase
     public async Task<ActionResult> GetMyInfo()
     {
         var id = HttpContext.User.FindFirstValue("id");
-        var user = _context.Users.FindAsync(id).Result;
+        var user = await _context.Users.FindAsync(id);
 
-        var response = new UserProfileResponse()
+        var response = new UserProfileResponse
         {
-            Description = user.Description,
+            Description = user!.Description,
             Id = user.Id,
             Login = user.Login,
             Name = user.Name,
@@ -47,9 +44,9 @@ public class UsersController : ControllerBase
     public async Task<ActionResult> UpdateUserInfo([FromBody] UserUpdateRequest updatedUser)
     {
         var id = HttpContext.User.FindFirstValue("id");
-        var user = _context.Users.FindAsync(id).Result;
+        var user = await _context.Users.FindAsync(id);
 
-        user.Description = updatedUser.Description;
+        user!.Description = updatedUser.Description;
         user.Photo = updatedUser.Photo;
         user.TelegramLink = updatedUser.TelegramLink;
         user.VkLink = updatedUser.VkLink;
@@ -65,14 +62,16 @@ public class UsersController : ControllerBase
     [HttpGet("id/{id}")]
     public async Task<ActionResult> GetUserById(string id)
     {
-        var user = _context.Users.FindAsync(id).Result;
+        var user = await _context.Users.FindAsync(id);
 
-        if (user == null)
+        if (user is null)
+        {
             return BadRequest("User not found");
+        }
 
         var userProjects = _context.Projects.Where(x => x.AuthorID == id).ToList();
 
-        var response = new UserProfileResponse()
+        var response = new UserProfileResponse
         {
             Description = user.Description,
             Photo = user.Photo,

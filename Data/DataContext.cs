@@ -1,6 +1,5 @@
 ﻿using digital_portfolio.Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace digital_portfolio.Data;
 public class DataContext : DbContext
@@ -13,7 +12,13 @@ public class DataContext : DbContext
         Database.Migrate();
     }
 
-    public async Task<int> SaveChanges() => await base.SaveChangesAsync();
+    public async Task<int> SaveChanges()
+    {
+        await base.SaveChangesAsync();
+    }
 
-    public DbSet<T> DbSet<T>() where T : class => Set<T>();
+    public DbSet<T> DbSet<T>() where T : class
+    {
+        return Set<T>();
+    }
 }

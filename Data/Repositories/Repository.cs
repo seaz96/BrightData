@@ -27,16 +27,19 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
     public async Task<string> Add(T entity)
     {
         var result = await _context.Set<T>().AddAsync(entity);
+
         await _context.SaveChangesAsync();
-        return result.Entity.Id;    
+
+        return result.Entity.Id;
     }
 
     public async Task Delete(string id)
     {
         var entity = await _context.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
+
         _context.Remove(entity);
+
         await _context.SaveChangesAsync();
-        return;
     }
 
     public async Task<int> SaveChangesAsync()

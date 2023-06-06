@@ -1,6 +1,4 @@
-using System.Text;
 using digital_portfolio.Data;
-using digital_portfolio.Data.Entities;
 using digital_portfolio.Data.Repositories;
 using digital_portfolio.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -8,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,10 +24,11 @@ builder.Services.AddDbContext<DataContext>(
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IHasher, Hasher>();
 
-builder.Services.AddAuthentication(opt => {
-        opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
+builder.Services.AddAuthentication(opt =>
+{
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
@@ -42,6 +42,7 @@ builder.Services.AddAuthentication(opt => {
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]!))
         };
     });
+
 builder.Services.AddAuthorization(options => options.DefaultPolicy =
     new AuthorizationPolicyBuilder
             (JwtBearerDefaults.AuthenticationScheme)

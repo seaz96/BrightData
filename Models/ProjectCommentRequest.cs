@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Primitives;
-
-namespace digital_portfolio.Models;
+﻿namespace digital_portfolio.Models;
 
 public class ProjectCommentRequest
 {

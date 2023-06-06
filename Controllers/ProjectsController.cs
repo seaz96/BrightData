@@ -1,11 +1,9 @@
 ﻿using digital_portfolio.Data;
 using digital_portfolio.Data.Entities;
+using digital_portfolio.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using digital_portfolio.Models;
-using Npgsql.Internal.TypeHandlers;
 
 namespace digital_portfolio.Controllers;
 
@@ -25,18 +23,19 @@ public class ProjectsController : ControllerBase
     public async Task<ActionResult> AddProject([FromBody] NewProjectRequest request)
     {
         var userId = HttpContext.User.FindFirstValue("id");
-        var user = _context.Users.FindAsync(userId).Result;
+        var user = await _context.Users.FindAsync(userId);
         var projectId = _context.Projects.Count().ToString();
 
-        var project = new ProjectEntity()
+        var project = new ProjectEntity
         {
             Name = request.Name,
-            AuthorID = user.Id,
+            AuthorID = user!.Id,
             Description = request.Description,
             Id = projectId
         };
 
         await _context.Projects.AddAsync(project);
+
         await _context.SaveChangesAsync();
 
         return Ok("Project created");
@@ -47,19 +46,19 @@ public class ProjectsController : ControllerBase
     public async Task<ActionResult> CommentProject([FromBody] ProjectCommentRequest request, string projectId)
     {
         var userId = HttpContext.User.FindFirstValue("id");
-        var project = _context.Projects.FindAsync(projectId).Result;
+        var project = await _context.Projects.FindAsync(projectId);
 
         var now = DateTime.Now;
         var publishedDate = now.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz");
 
         var comment = new CommentsEntity()
         {
-            AuthorID = userId,
+            AuthorID = userId!,
             Comment = request.Text,
             PublishedDate = publishedDate,
         };
 
-        project.Comments.Add(comment);
+        project!.Comments.Add(comment);
 
         await _context.SaveChangesAsync();
 
@@ -71,11 +70,12 @@ public class ProjectsController : ControllerBase
     public async Task<ActionResult> UpdateProject([FromBody] ProjectUpdateRequest request, string projectId)
     {
         var userId = HttpContext.User.FindFirstValue("id");
-        var user = _context.Users.FindAsync(userId).Result;
-        var project = _context.Projects.FindAsync(projectId).Result;
+        var project = await _context.Projects.FindAsync(projectId);
 
-        if (userId != project.AuthorID)
+        if (userId != project!.AuthorID)
+        {
             return BadRequest("User has no access");
+        }
 
         project.Name = request.Name;
         project.Description = request.Description;
@@ -98,10 +98,12 @@ public class ProjectsController : ControllerBase
     [HttpGet("id/{id}")]
     public async Task<ActionResult> GetProjectByid(string id)
     {
-        var project = _context.Projects.FindAsync(id).Result;
+        var project = await _context.Projects.FindAsync(id);
 
-        if (project == null)
+        if (project is null)
+        {
             return BadRequest("Project not found");
+        }
 
         return Ok(project);
     }
