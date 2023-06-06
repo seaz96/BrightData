@@ -1,6 +1,7 @@
 ﻿using digital_portfolio.Data.Entities;
 
 namespace digital_portfolio.Models;
+
 public class ProjectUpdateRequest
 {
     public string Name { get; set; }

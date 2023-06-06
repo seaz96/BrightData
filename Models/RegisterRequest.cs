@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace digital_portfolio.Models;
+
 public class RegisterRequest
 {
     [Required]

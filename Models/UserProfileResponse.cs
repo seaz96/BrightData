@@ -1,4 +1,5 @@
 ﻿namespace digital_portfolio.Data.Entities;
+
 public class UserProfileResponse : BaseEntity
 {
     public string Login { get; set; }

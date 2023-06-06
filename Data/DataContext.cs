@@ -14,7 +14,7 @@ public class DataContext : DbContext
 
     public async Task<int> SaveChanges()
     {
-        await base.SaveChangesAsync();
+        return await base.SaveChangesAsync();
     }
 
     public DbSet<T> DbSet<T>() where T : class

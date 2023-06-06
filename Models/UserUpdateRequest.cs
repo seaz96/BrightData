@@ -1,4 +1,5 @@
 ﻿namespace digital_portfolio.Models;
+
 public class UserUpdateRequest
 {
     public string Email { get; set; }

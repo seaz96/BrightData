@@ -1,4 +1,5 @@
 ﻿namespace digital_portfolio.Models;
+
 public class NewProjectRequest
 {
     public string Name { get; set; }
