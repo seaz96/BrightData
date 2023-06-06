@@ -43,6 +43,30 @@ public class ProjectsController : ControllerBase
     }
 
     [Authorize]
+    [HttpPost("comment")]
+    public async Task<ActionResult> CommentProject([FromBody] ProjectCommentRequest request, string projectId)
+    {
+        var userId = HttpContext.User.FindFirstValue("id");
+        var project = _context.Projects.FindAsync(projectId).Result;
+
+        var now = DateTime.Now;
+        var publishedDate = now.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz");
+
+        var comment = new CommentsEntity()
+        {
+            AuthorID = userId,
+            Comment = request.Text,
+            PublishedDate = publishedDate,
+        };
+
+        project.Comments.Add(comment);
+
+        await _context.SaveChangesAsync();
+
+        return Ok(comment);
+    }
+
+    [Authorize]
     [HttpPost("update")]
     public async Task<ActionResult> UpdateProject([FromBody] ProjectUpdateRequest request, string projectId)
     {

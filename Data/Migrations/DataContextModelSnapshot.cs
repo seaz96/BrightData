@@ -22,102 +22,102 @@ namespace digital_portfolio.Data.Migrations
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("digital_portfolio.Data.Entities.ProjectEntity", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
+            {
+                b.Property<string>("Id")
+                    .HasColumnType("text");
 
-                    b.Property<string>("AuthorID")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("AuthorID")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
+                b.Property<string>("Description")
+                    .HasColumnType("text");
 
-                    b.Property<string>("GithubLink")
-                        .HasColumnType("text");
+                b.Property<string>("GithubLink")
+                    .HasColumnType("text");
 
-                    b.Property<int>("Likes")
-                        .HasColumnType("integer");
+                b.Property<int>("Likes")
+                    .HasColumnType("integer");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.Property<string>("Photo")
-                        .HasColumnType("text");
+                b.Property<string>("Photo")
+                    .HasColumnType("text");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Projects");
-                });
+                b.ToTable("Projects");
+            });
 
             modelBuilder.Entity("digital_portfolio.Data.Entities.TechnologiesEntity", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
+            {
+                b.Property<string>("Id")
+                    .HasColumnType("text");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.Property<string>("ProjectEntityId")
-                        .HasColumnType("text");
+                b.Property<string>("ProjectEntityId")
+                    .HasColumnType("text");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("ProjectEntityId");
+                b.HasIndex("ProjectEntityId");
 
-                    b.ToTable("TechnologiesEntity");
-                });
+                b.ToTable("TechnologiesEntity");
+            });
 
             modelBuilder.Entity("digital_portfolio.Data.Entities.UserEntity", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
+            {
+                b.Property<string>("Id")
+                    .HasColumnType("text");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
+                b.Property<string>("Description")
+                    .HasColumnType("text");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Email")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.Property<string>("Login")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Login")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
+                b.Property<string>("Name")
+                    .HasColumnType("text");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Password")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.Property<string>("Photo")
-                        .HasColumnType("text");
+                b.Property<string>("Photo")
+                    .HasColumnType("text");
 
-                    b.Property<string>("TelegramLink")
-                        .HasColumnType("text");
+                b.Property<string>("TelegramLink")
+                    .HasColumnType("text");
 
-                    b.Property<string>("VkLink")
-                        .HasColumnType("text");
+                b.Property<string>("VkLink")
+                    .HasColumnType("text");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Users");
-                });
+                b.ToTable("Users");
+            });
 
             modelBuilder.Entity("digital_portfolio.Data.Entities.TechnologiesEntity", b =>
-                {
-                    b.HasOne("digital_portfolio.Data.Entities.ProjectEntity", null)
-                        .WithMany("Technologies")
-                        .HasForeignKey("ProjectEntityId");
-                });
+            {
+                b.HasOne("digital_portfolio.Data.Entities.ProjectEntity", null)
+                    .WithMany("Technologies")
+                    .HasForeignKey("ProjectEntityId");
+            });
 
             modelBuilder.Entity("digital_portfolio.Data.Entities.ProjectEntity", b =>
-                {
-                    b.Navigation("Technologies");
-                });
+            {
+                b.Navigation("Technologies");
+            });
 #pragma warning restore 612, 618
         }
     }
