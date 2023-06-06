@@ -12,7 +12,7 @@ public class DataContext : DbContext
         Database.Migrate();
     }
 
-    public async Task<int> SaveChanges()
+    public new async Task<int> SaveChanges()
     {
         return await base.SaveChangesAsync();
     }
