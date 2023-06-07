@@ -112,5 +112,21 @@ public class ProjectsController : ControllerBase
 
         return Ok(project);
     }
+
+    [AllowAnonymous]
+    [HttpGet("feed")]
+    public ActionResult<ProjectsFeedResponse> GetProjectsFeed()
+    {
+        const int maxProjectsCount = 10;
+
+        var projects = _context.Projects.FromSql($"select * from table Projects by random() limit {maxProjectsCount}").ToArray();
+
+        var response = new ProjectsFeedResponse
+        {
+            Projects = projects,
+        };
+
+        return new ActionResult<ProjectsFeedResponse>(response);
+    }
 }
 
