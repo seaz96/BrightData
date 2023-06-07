@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using digital_portfolio.Helpers;
 
 namespace digital_portfolio.Controllers;
 
@@ -115,11 +116,16 @@ public class ProjectsController : ControllerBase
 
     [AllowAnonymous]
     [HttpGet("feed")]
-    public ActionResult<ProjectsFeedResponse> GetProjectsFeed([FromBody] ProjectsFeedRequest request)
+    public ActionResult<ProjectsFeedResponse> GetProjectsFeed(int count)
     {
-        var count = request.Count;
-
-        var projects = _context.Projects.FromSql($"select * from table Projects by random() limit {count}").ToArray();
+       var projects = _context.Projects
+            .Include(x => x.Comments)
+            .Include(x => x.Technologies)
+            .OrderBy(x => x.Likes + x.Comments.Count * 5)
+            .Take(count)
+            .ToList();
+            
+        projects.Shuffle();
 
         var response = new ProjectsFeedResponse
         {
