@@ -8,9 +8,9 @@ public class ProjectEntity : BaseEntity
 
     public string? Description { get; set; }
 
-    public List<TechnologiesEntity> Technologies { get; set; }
+    public virtual ICollection<TechnologiesEntity> Technologies { get; set; }
 
-    public List<CommentsEntity> Comments { get; set; }
+    public virtual ICollection<CommentsEntity> Comments { get; set; }
 
     public string? GithubLink { get; set; }
 

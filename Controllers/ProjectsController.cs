@@ -3,6 +3,7 @@ using digital_portfolio.Data.Entities;
 using digital_portfolio.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace digital_portfolio.Controllers;
@@ -98,7 +99,11 @@ public class ProjectsController : ControllerBase
     [HttpGet("id/{id}")]
     public async Task<ActionResult> GetProjectByid(string id)
     {
-        var project = await _context.Projects.FindAsync(id);
+        var project = await _context.Projects
+            .Include(x => x.Comments)
+            .Include(x => x.Technologies)
+            .Where(x => x.Id == id)
+            .FirstOrDefaultAsync();
 
         if (project is null)
         {
