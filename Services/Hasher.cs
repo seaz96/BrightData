@@ -73,10 +73,6 @@ public class Hasher : IHasher
             return false;
         }
 
-        if (b1.GetHashCode() != b2.GetHashCode())
-        {
-            return false;
-        }
 
         for (int i = 0; i < b1.Length; i++)
         {
