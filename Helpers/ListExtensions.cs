@@ -10,9 +10,7 @@ public static class ListExtensions
         {
             n--;
             var k = rnd.Next(n + 1);
-            T value = list[k];
-            list[k] = list[n];
-            list[n] = value;
+            (list[k], list[n]) = (list[n], list[k]);
         }
     }
 }

@@ -96,6 +96,24 @@ public class ProjectsController : ControllerBase
         return Ok(request.Technologies);
     }
 
+    [Authorize]
+    [HttpPost("like")]
+    public async Task<ActionResult> AddLike([FromBody] string projectId)
+    {
+        var project = await _context.Projects.FindAsync(projectId);
+
+        if (project is null)
+        {
+            return BadRequest("Project not found");
+        }
+
+        project.Likes++;
+
+        await _context.SaveChangesAsync();
+
+        return Ok();
+    }
+
     [AllowAnonymous]
     [HttpGet("id/{id}")]
     public async Task<ActionResult> GetProjectByid(string id)
