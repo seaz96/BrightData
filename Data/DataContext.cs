@@ -9,6 +9,7 @@ public class DataContext : DbContext
 
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
+        Database.Migrate();
     }
 
     public new async Task<int> SaveChanges()
