@@ -6,6 +6,7 @@ using digital_portfolio.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 
 namespace digital_portfolio.Controllers;
 
@@ -72,6 +73,13 @@ public class AuthController : ControllerBase
         if (request.Password != request.PasswordConfirm)
         {
             return BadRequest("Passwords are different");
+        }
+
+        var mailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+
+        if (!mailRegex.IsMatch(request.Email))
+        {
+            return BadRequest("Wrong email insert");
         }
 
         var hashedPassword = _hasher.HashPassword(request.Password);
