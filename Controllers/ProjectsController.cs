@@ -44,6 +44,28 @@ public class ProjectsController : ControllerBase
     }
 
     [Authorize]
+    [HttpPost("delete")]
+    public async Task<ActionResult> DeleteProject([FromBody] string projectId)
+    {
+        var userId = HttpContext.User.FindFirstValue("id");
+        var project = await _context.Projects
+            .Include(x => x.Comments)
+            .Include(x => x.Technologies)
+            .FirstOrDefaultAsync(x => x.Id == projectId);
+
+        if (project.AuthorID != userId)
+        {
+            return BadRequest("You have no permissions");
+        }
+
+        _context.Projects.Remove(project);
+
+        await _context.SaveChanges();
+
+        return Ok("Project deleted");
+    }
+
+    [Authorize]
     [HttpPost("comment")]
     public async Task<ActionResult> CommentProject([FromBody] ProjectCommentRequest request, string projectId)
     {
