@@ -17,4 +17,11 @@ public class UserEntity : BaseEntity
     public string? Description { get; set; }
 
     public string? Photo { get; set; }
+
+    public virtual ICollection<LikedProjectEntity> LikedProjects { get; set; }
+}
+
+public class LikedProjectEntity : BaseEntity
+{
+    public string ProjectId { get; set; }
 }

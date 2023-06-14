@@ -107,11 +107,58 @@ public class ProjectsController : ControllerBase
             return BadRequest("Project not found");
         }
 
+        var userId = HttpContext.User.FindFirstValue("id");
+        var user = await _context.Users
+            .Include(x => x.LikedProjects)
+            .FirstOrDefaultAsync(x => x.Id == userId);
+
+        if (user.LikedProjects.FirstOrDefault(x => x.ProjectId == projectId) != null)
+        {
+            return BadRequest("Project already liked");
+        }
+
+        user.LikedProjects.Add(new LikedProjectEntity()
+        {
+            Id = Guid.NewGuid().ToString(),
+            ProjectId = projectId
+        });
         project.Likes++;
 
         await _context.SaveChangesAsync();
 
-        return Ok();
+        return Ok("Project liked!");
+    }
+
+    [Authorize]
+    [HttpPost("dislike")]
+    public async Task<ActionResult> RemoveLike([FromBody] string projectId)
+    {
+        var project = await _context.Projects.FindAsync(projectId);
+
+        if (project is null)
+        {
+            return BadRequest("Project not found");
+        }
+
+        var userId = HttpContext.User.FindFirstValue("id");
+        var user = await _context.Users
+            .Include(x => x.LikedProjects)
+            .FirstOrDefaultAsync(x => x.Id == userId);
+
+        var likedProject = user.LikedProjects.FirstOrDefault(x => x.ProjectId == projectId);
+
+
+        if (likedProject == null)
+        {
+            return BadRequest("Project not liked");
+        }
+
+        user.LikedProjects.Remove(likedProject);
+        project.Likes--;
+
+        await _context.SaveChangesAsync();
+
+        return Ok("Project like removed!");
     }
 
     [AllowAnonymous]
@@ -121,12 +168,32 @@ public class ProjectsController : ControllerBase
         var project = await _context.Projects
             .Include(x => x.Comments)
             .Include(x => x.Technologies)
-            .Where(x => x.Id == id)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(x => x.Id == id);
 
         if (project is null)
         {
             return BadRequest("Project not found");
+        }
+
+        if (HttpContext.User.Identity.IsAuthenticated)
+        {
+            var userId = HttpContext.User.FindFirstValue("id");
+            var user = await _context.Users
+                .Include(x => x.LikedProjects)
+                .FirstOrDefaultAsync(x => x.Id == userId);
+
+            return Ok(new ProjectInfoResponse()
+            {
+                AuthorID = project.AuthorID,
+                Comments = project.Comments,
+                Description = project.Description,
+                GithubLink = project.GithubLink,
+                Likes = project.Likes,
+                Name = project.Name,
+                Photo = project.Photo,
+                Technologies = project.Technologies,
+                IsLiked = user.LikedProjects.FirstOrDefault(x => x.ProjectId == project.Id) != null
+            });
         }
 
         return Ok(project);
