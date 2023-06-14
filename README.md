@@ -106,13 +106,32 @@ Response body:
   "authorID": "0",
   "name": "string",
   "description": "string",
-  "technologies": null,
-  "githubLink": "string",
+  "technologies": [],
+  "comments": [],
+  "githubLink": null,
   "likes": 0,
-  "photo": "string",
+  "photo": null,
   "id": "0"
 }
 ```
+
+Если пользователь авторизован:
+Response body:
+```
+{
+  "authorID": "0",
+  "name": "string",
+  "description": "string",
+  "technologies": [],
+  "comments": [],
+  "githubLink": null,
+  "likes": 0,
+  "photo": null,
+  "id": "0",
+  "isLiked" : false
+}
+```
+
 ### Создание нового проекта
 [Authorized ] POST-запрос .../Projects/add
 
@@ -140,6 +159,8 @@ Request body:
   "photo": "string"
 }
 ```
+Примечание: при указании технологий можно игнорировать id, в запросе оно его требует, однако этот id сгенерируется на сервере, он не означает id проекта.
+
 
 ### Добавление комментария о проекте
 [Authorized] POST-запрос .../Projects/comment
@@ -158,8 +179,26 @@ Request body:
     "count" : 0
 }
 ```
-Примечание: при указании технологий можно игнорировать id, в запросе оно его требует, однако этот id сгенерируется на сервере, он не означает id проекта.
 
+### Лайкнуть проект
+[Authorized] POST-запрос .../Projects/like
+Request body:
+```
+{
+    "string"
+}
+```
+Вводится id проекта
+
+### Убрать лайк
+[Authorized] POST-запрос .../Projects/dislike
+Request body:
+```
+{
+    "string"
+}
+```
+Вводится id проекта
 
 
 
