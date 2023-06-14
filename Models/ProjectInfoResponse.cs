@@ -3,6 +3,7 @@
 namespace digital_portfolio.Models;
 public class ProjectInfoResponse
 {
+
     public string AuthorID { get; set; }
 
     public string Name { get; set; }
@@ -18,6 +19,8 @@ public class ProjectInfoResponse
     public int Likes { get; set; }
 
     public string? Photo { get; set; }
+
+    public string Id { get; set; }
 
     public bool IsLiked { get; set; }
 }

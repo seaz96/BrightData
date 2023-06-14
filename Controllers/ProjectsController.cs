@@ -192,6 +192,7 @@ public class ProjectsController : ControllerBase
                 Name = project.Name,
                 Photo = project.Photo,
                 Technologies = project.Technologies,
+                Id = project.Id,
                 IsLiked = user.LikedProjects.FirstOrDefault(x => x.ProjectId == project.Id) != null
             });
         }
