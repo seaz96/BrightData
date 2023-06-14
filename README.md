@@ -161,6 +161,14 @@ Request body:
 ```
 Примечание: при указании технологий можно игнорировать id, в запросе оно его требует, однако этот id сгенерируется на сервере, он не означает id проекта.
 
+### Удаление проекта
+[Authorized] POST-запрос .../Projects/delete
+Request body:
+```
+{
+    "projectId
+}
+```
 
 ### Добавление комментария о проекте
 [Authorized] POST-запрос .../Projects/comment
@@ -185,7 +193,7 @@ Request body:
 Request body:
 ```
 {
-    "string"
+    "projectId"
 }
 ```
 Вводится id проекта
@@ -195,7 +203,7 @@ Request body:
 Request body:
 ```
 {
-    "string"
+    "projectId"
 }
 ```
 Вводится id проекта
