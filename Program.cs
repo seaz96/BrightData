@@ -19,6 +19,8 @@ builder.Services.AddDbContext<DataContext>(
     o => o.UseNpgsql(builder.Configuration.GetConnectionString("BrightDataDB")));
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IPasswordGenerator, PasswordGenerator>();
 builder.Services.AddScoped<IHasher, Hasher>();
 
 builder.Services.AddAuthentication(opt =>

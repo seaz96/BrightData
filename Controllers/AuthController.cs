@@ -15,23 +15,24 @@ namespace digital_portfolio.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly DataContext _context;
-
     private readonly IRepository<UserEntity> _userRepository;
-
     private readonly ITokenService _tokenService;
-
     private readonly IConfiguration _configuration;
-
     private readonly IHasher _hasher;
+    private readonly IEmailSender _emailSender;
+    private readonly IPasswordGenerator _passwordGenerator;
 
     public AuthController(
-        DataContext context, ITokenService tokenService, IConfiguration configuration, IRepository<UserEntity> userRepository, IHasher hasher)
+        DataContext context, ITokenService tokenService, IConfiguration configuration, IRepository<UserEntity> userRepository, 
+        IHasher hasher, IEmailSender emailSender, IPasswordGenerator passwordGenerator)
     {
         _context = context;
         _tokenService = tokenService;
         _configuration = configuration;
         _userRepository = userRepository;
         _hasher = hasher;
+        _emailSender = emailSender;
+        _passwordGenerator = passwordGenerator;
     }
 
     [HttpPost("login")]
@@ -141,5 +142,35 @@ public class AuthController : ControllerBase
         await _context.SaveChangesAsync();
 
         return Ok("Password successfully changed");
+    }
+
+    [AllowAnonymous]
+    [HttpPost("recover-password")]
+    public async Task<ActionResult> RecoverPassword([FromBody] RecoverPasswordRequest request)
+    {
+        var user = _userRepository
+            .GetAll()
+            .FirstOrDefault(x => x.Login == request.Login);
+
+        if (user is null)
+        {
+            return BadRequest("User not found");
+        }
+
+        if (user.Email != request.Email)
+        {
+            return BadRequest("Wrong email");
+        }
+
+        var newPassword = _passwordGenerator.GeneratePassword();
+
+        await _emailSender.SendEmailAsync(user.Email, "Восстановление пароля",
+            "Ваш новый пароль от аккаунта: " + newPassword);
+
+        user.Password = _hasher.HashPassword(newPassword);
+
+        await _context.SaveChangesAsync();
+
+        return Ok("Mail sent");
     }
 }
