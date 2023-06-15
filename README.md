@@ -26,6 +26,7 @@ POST-запрос .../Auth/login
 Request body: 
 ```
 {
+  "id": "string",
   "login": "string",
   "password": "string"
 }
@@ -33,6 +34,7 @@ Request body:
 Response body: 
 ```
 {
+  "id": "string",
   "login": "string",
   "token": "string"
 }
