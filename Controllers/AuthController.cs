@@ -57,7 +57,8 @@ public class AuthController : ControllerBase
         var result = new AuthResponse
         {
             Login = request.Login,
-            Token = token
+            Token = token,
+            Id = user.Id,
         };
 
         return new ActionResult<AuthResponse>(result);
