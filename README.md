@@ -50,6 +50,19 @@ Request body:
 }
 ```
 
+### Забыли пароль
+POST-запрос .../Auth/recover-password
+
+Request body: 
+```
+{
+  "login": "string",
+  "email": "string"
+}
+```
+
+Если неправильный пароль: status 400, Response body "Wrong email"
+
 ## Действия с пользователями
 ### Получение пользователя по id
 GET-запрос .../User/id/{id}
