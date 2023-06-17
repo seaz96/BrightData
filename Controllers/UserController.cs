@@ -4,6 +4,7 @@ using digital_portfolio.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace digital_portfolio.Controllers;
 
@@ -69,7 +70,10 @@ public class UsersController : ControllerBase
             return BadRequest("User not found");
         }
 
-        var userProjects = _context.Projects.Where(x => x.AuthorID == id).ToList();
+        var userProjects = _context.Projects
+            .Include(x => x.Comments)
+            .Include(x => x.Technologies)
+            .Where(x => x.AuthorID == id).ToList();
 
         var response = new UserProfileResponse
         {
@@ -80,7 +84,8 @@ public class UsersController : ControllerBase
             Login = user.Login,
             Name = user.Name,
             VkLink = user.VkLink,
-            Projects = userProjects
+            Projects = userProjects,
+            Email = user.Email
         };
 
         return Ok(response);
