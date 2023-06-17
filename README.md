@@ -1,4 +1,4 @@
-# Документация
+![image](https://github.com/seaz96/BrightData/assets/72539757/1867fe57-e4f7-4972-848e-7d683670235b)# Документация
 asp.net rest api 
 ## Авторизация и аутентификация
 ### Регистрация
@@ -154,7 +154,14 @@ Request body:
 ```
 {
   "name": "string",
-  "description": "string"
+  "technologies": [
+    {
+      "id": "string",
+      "name": "string"
+    }
+  ],
+  "githubLink": "string",
+  "photo": "string"
 }
 ```
 ### Изменение информации о проекте
