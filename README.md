@@ -67,7 +67,7 @@ Request body:
 
 ## Действия с пользователями
 ### Получение пользователя по id
-GET-запрос .../User/id/{id}
+GET-запрос .../Users/id/{id}
 
 Response body:
 ```
@@ -83,7 +83,7 @@ Response body:
 }
 ```
 ### Получение информации своего профиля
-[Autorized] GET-запрос .../User/{id}
+[Autorized] GET-запрос .../Users/{id}
 
 Response body:
 ```
@@ -98,7 +98,7 @@ Response body:
 }
 ```
 ### Обновление информации профиля
-[Authorized] POST-запрос .../User/update
+[Authorized] POST-запрос .../Users/update
 
 Request body:
 ```
