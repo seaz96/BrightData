@@ -28,11 +28,18 @@ public class ProjectsController : ControllerBase
         var user = await _context.Users.FindAsync(userId);
         var projectId = _context.Projects.Count().ToString();
 
+        foreach (var entity in request.Technologies)
+        {
+            entity.Id = Guid.NewGuid().ToString();
+        }
+
         var project = new ProjectEntity
         {
             Name = request.Name,
             AuthorID = user!.Id,
-            Description = request.Description,
+            Photo = request.Photo,
+            Technologies = request.Technologies,
+            GithubLink = request.GithubLink,
             Id = projectId
         };
 
