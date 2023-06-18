@@ -154,7 +154,14 @@ Request body:
 ```
 {
   "name": "string",
-  "description": "string"
+  "technologies": [
+    {
+      "id": "string",
+      "name": "string"
+    }
+  ],
+  "githubLink": "string",
+  "photo": "string"
 }
 ```
 ### Изменение информации о проекте
