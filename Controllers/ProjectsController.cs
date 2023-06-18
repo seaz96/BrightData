@@ -240,13 +240,34 @@ public class ProjectsController : ControllerBase
     [HttpGet("feed")]
     public ActionResult<ProjectsFeedResponse> GetProjectsFeed(int count)
     {
-       var projects = _context.Projects
+        var projects = _context.Projects
             .Include(x => x.Comments)
             .Include(x => x.Technologies)
             .OrderBy(x => x.Likes + x.Comments.Count * 5)
             .Take(count)
+            .Select(x =>
+                new ProjectInfoResponse()
+                {
+                    AuthorID = x.AuthorID,
+                    Comments = x.Comments,
+                    Description = x.Description,
+                    GithubLink = x.GithubLink,
+                    Likes = x.Likes,
+                    Name = x.Name,
+                    Photo = x.Photo,
+                    Technologies = x.Technologies,
+                    Id = x.Id,
+                    IsLiked = false
+                })
             .ToList();
-            
+
+        foreach (var project in projects)
+        {
+            var user = _context.Users.FirstOrDefaultAsync(u => u.Id == project.AuthorID).Result;
+            project.AuthorLogin = user.Login;
+            project.AuthorName = user.Name;
+        }
+
         projects.Shuffle();
 
         var response = new ProjectsFeedResponse

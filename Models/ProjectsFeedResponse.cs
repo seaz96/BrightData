@@ -4,5 +4,5 @@ namespace digital_portfolio.Models;
 
 public class ProjectsFeedResponse : BaseEntity
 {
-    public ICollection<ProjectEntity> Projects { get; set; }
+    public ICollection<ProjectInfoResponse> Projects { get; set; }
 }
