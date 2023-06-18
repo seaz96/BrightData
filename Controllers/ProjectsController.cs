@@ -26,7 +26,7 @@ public class ProjectsController : ControllerBase
     {
         var userId = HttpContext.User.FindFirstValue("id");
         var user = await _context.Users.FindAsync(userId);
-        var projectId = _context.Projects.Count().ToString();
+        var projectId = Convert.ToInt32(_context.Projects.OrderByDescending(x => x.Id).First().Id) + 1;
 
         foreach (var entity in request.Technologies)
         {
@@ -40,7 +40,7 @@ public class ProjectsController : ControllerBase
             Photo = request.Photo,
             Technologies = request.Technologies,
             GithubLink = request.GithubLink,
-            Id = projectId
+            Id = projectId.ToString()
         };
 
         await _context.Projects.AddAsync(project);
@@ -127,9 +127,9 @@ public class ProjectsController : ControllerBase
 
     [Authorize]
     [HttpPost("like")]
-    public async Task<ActionResult> AddLike([FromBody] string projectId)
+    public async Task<ActionResult> AddLike([FromBody] LikeRequest request)
     {
-        var project = await _context.Projects.FindAsync(projectId);
+        var project = await _context.Projects.FindAsync(request.projectId);
 
         if (project is null)
         {
@@ -141,7 +141,7 @@ public class ProjectsController : ControllerBase
             .Include(x => x.LikedProjects)
             .FirstOrDefaultAsync(x => x.Id == userId);
 
-        if (user.LikedProjects.FirstOrDefault(x => x.ProjectId == projectId) != null)
+        if (user.LikedProjects.FirstOrDefault(x => x.ProjectId == request.projectId) != null)
         {
             return BadRequest("Project already liked");
         }
@@ -149,7 +149,7 @@ public class ProjectsController : ControllerBase
         user.LikedProjects.Add(new LikedProjectEntity()
         {
             Id = Guid.NewGuid().ToString(),
-            ProjectId = projectId
+            ProjectId = request.projectId
         });
         project.Likes++;
 
@@ -160,9 +160,9 @@ public class ProjectsController : ControllerBase
 
     [Authorize]
     [HttpPost("dislike")]
-    public async Task<ActionResult> RemoveLike([FromBody] string projectId)
+    public async Task<ActionResult> RemoveLike([FromBody] LikeRequest request)
     {
-        var project = await _context.Projects.FindAsync(projectId);
+        var project = await _context.Projects.FindAsync(request.projectId);
 
         if (project is null)
         {
@@ -174,7 +174,7 @@ public class ProjectsController : ControllerBase
             .Include(x => x.LikedProjects)
             .FirstOrDefaultAsync(x => x.Id == userId);
 
-        var likedProject = user.LikedProjects.FirstOrDefault(x => x.ProjectId == projectId);
+        var likedProject = user.LikedProjects.FirstOrDefault(x => x.ProjectId == request.projectId);
 
 
         if (likedProject == null)
