@@ -22,7 +22,7 @@ const EditProfileModal:React.FC<EditProfileModalProps> = ({isOpen, setIsOpen, se
             description: values.description ? values.description : "",
             photo: values.photo ? values.photo : "" 
           }
-          console.log(refactoredValues)
+
           await axios.post(
             'http://localhost:5000/api/users/update',
             {

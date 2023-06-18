@@ -5,7 +5,6 @@ import { TechnologiesList } from 'components';
 
 import styles from './ProjectCard.module.scss';
 import Link from 'assets/Link.svg';
-import ProjectCardLogo from 'assets/projectCardLogo.png';
 import classNames from 'classnames';
 import { Technology } from 'Types';
 
@@ -20,6 +19,9 @@ interface ProjectCardProps
   githubLink: string,
   likes: number,
   photo: string,
+  authorName: string,
+  likeProject: Function,
+  dislikeProject: Function,
   id: number
 }
 
@@ -32,6 +34,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   githubLink,
   likes,
   photo,
+  authorName,
+  likeProject,
+  dislikeProject,
   id
 }) => {
   const [isLiked, setIsLiked] = useState(likeState);
@@ -41,25 +46,29 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       <header className={styles.projectCard__header}>
         <p className={styles.projectCard__person}>
           <UserOutlined className={styles.projectCard__personImg} alt='person'/>
-          <span className={styles.projectCard__personName}>alexcoder007</span>
+          <span className={styles.projectCard__personName}>{authorName}</span>
         </p>
         <Button 
           className={classNames(styles.projectCard__likes, isLiked ? styles.projectCard__likes_liked : '')}
           icon={isLiked ? <HeartFilled /> : <HeartOutlined />}
-          onClick={() => setIsLiked(!isLiked)}
+          onClick={() => {
+            if(!isLiked) likeProject(id)
+            else dislikeProject(id)
+            setIsLiked(!isLiked)
+          }}
         >
           {isLiked ? likes + 1 : likes}
         </Button>
       </header>
       <main>
-        <img src={ProjectCardLogo} className={styles.projectCard__logo} alt='project logo'/>
+        <img src={photo} className={styles.projectCard__logo} alt='project logo'/>
         <div className={styles.projectCard__infoContainer}>
           <p className={styles.projectCard__link}>
             <img src={Link} className={styles.projectCard__linkImg} alt='project link'/>
-            <a href='/' className={styles.projectCard__linkText}>github</a>
+            <a href='/' className={styles.projectCard__linkText}>{githubLink}</a>
           </p>
           <p className={styles.projectCard__text}>
-            CodeCraft: разработка инновационных решений с использованием передовых технологий
+            {name}
           </p>
           <TechnologiesList technologies={technologies}/>
         </div>

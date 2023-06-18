@@ -1,8 +1,9 @@
 .projectsList {
+    flex-grow: 1;
 
     &__list {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(225px, 500px));
+        grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
 
         padding: 0 20px;
         gap: 20px;
@@ -10,5 +11,6 @@
 
     &__item {
         border-top: 1px solid rgba(0, 0, 0, 0.1);
+        max-width: 450px;
     }
 }

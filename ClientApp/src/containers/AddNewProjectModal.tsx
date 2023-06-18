@@ -2,7 +2,6 @@ import React from 'react'
 import { AddNewProjectModal as BaseModal} from 'components'
 import axios from 'axios';
 import { userStore } from 'store';
-import { userData } from 'Types';
 
 interface AddNewProjectModalProps {
     isOpen: boolean,
@@ -41,7 +40,6 @@ const AddNewProjectModal:React.FC<AddNewProjectModalProps> = ({isOpen, setIsOpen
             }
           );    
 
-          userStore.setUserData(values)
         } catch (error) {
           if (axios.isAxiosError(error)) {
             console.log(error);

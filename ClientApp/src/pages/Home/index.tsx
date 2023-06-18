@@ -42,7 +42,7 @@ export default function Home({
   } 
 
   useEffect(() => {
-    getProjects(12)
+    getProjects(20)
   })
 
   if(!projects) return <Loader />

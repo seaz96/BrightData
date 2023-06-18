@@ -19,16 +19,7 @@ const Profile:React.FC<ProfileProps> = ({userData}) => {
         userData={userData}
         setModalOpen={setEditModalOpen}
       />
-      <ProjectsList projects={[{
-        "authorID": "0",
-        "name": "Lol",
-        "description": "Hehe",
-        "technologies": [{id:"0", name: "Javascript"}],
-        "githubLink": "github.com",
-        "likes": 234,
-        "photo": "123",
-        "id": 1
-      }]}/>
+      <ProjectsList projects={userData.projects} technologiesFilter={[]}/>
       <EditProfileModal 
         isOpen={isEditModalOpen} 
         setIsOpen={setEditModalOpen} 

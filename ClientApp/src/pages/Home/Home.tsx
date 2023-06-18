@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Advertising, Filter, ProjectsList} from 'components';
 import styles from './Home.module.scss';
@@ -16,14 +16,13 @@ export default function Home({
   setAddProjectModalVisibility,
   projects
 }: HomeProps) {
+  const [technologiesFilter, setTechnologiesFilter] = useState([]);
   
   return (
-    <>
-      <div className={styles.home}>
-        <Advertising openSignUpModal={setSignUpModalVisibility} setAddProjectModalVisibility={setAddProjectModalVisibility}/>
-        <Filter />
-        <ProjectsList projects={projects}/>
-      </div>
-    </>
+    <div className={styles.home}>
+      <Advertising openSignUpModal={setSignUpModalVisibility} setAddProjectModalVisibility={setAddProjectModalVisibility}/>
+      <Filter setTechnologiesFilter={setTechnologiesFilter}/>
+      <ProjectsList projects={projects} technologiesFilter={technologiesFilter}/>
+    </div>
   )
 }

@@ -5,7 +5,11 @@ import type { SelectProps } from 'antd';
 import styles from './Filter.module.scss';
 import './Filter.css';
 
-export default function Filter() {
+interface FilterProps {
+  setTechnologiesFilter: Function
+}
+
+const Filter:React.FC<FilterProps> = ({setTechnologiesFilter}) => {
   const stackOptions: SelectProps['options'] = [
   {
     label: 'Javascript',
@@ -29,6 +33,7 @@ export default function Filter() {
           placeholder="Все стеки"
           options={stackOptions}
           className={styles.filter__input}
+          onChange={(values: any) => setTechnologiesFilter(values)}
         />
       </Form.Item>
       <Form.Item 
@@ -43,3 +48,5 @@ export default function Filter() {
     </Form>
   )
 }
+
+export default Filter;
