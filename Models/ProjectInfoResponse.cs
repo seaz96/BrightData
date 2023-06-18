@@ -23,4 +23,8 @@ public class ProjectInfoResponse
     public string Id { get; set; }
 
     public bool IsLiked { get; set; }
+
+    public string? AuthorLogin { get; set; }
+
+    public string? AuthorName { get; set; }
 }

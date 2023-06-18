@@ -199,10 +199,28 @@ public class ProjectsController : ControllerBase
             .Include(x => x.Technologies)
             .FirstOrDefaultAsync(x => x.Id == id);
 
+        var author = await _context.Users.FirstOrDefaultAsync(x => x.Id == project.AuthorID);
+
         if (project is null)
         {
             return BadRequest("Project not found");
         }
+
+        var projectInfo = new ProjectInfoResponse()
+        {
+            AuthorID = project.AuthorID,
+            Comments = project.Comments,
+            Description = project.Description,
+            GithubLink = project.GithubLink,
+            Likes = project.Likes,
+            Name = project.Name,
+            Photo = project.Photo,
+            Technologies = project.Technologies,
+            Id = project.Id,
+            IsLiked = false,
+            AuthorLogin = author.Login,
+            AuthorName = author.Name
+        };
 
         if (HttpContext.User.Identity.IsAuthenticated)
         {
@@ -211,22 +229,11 @@ public class ProjectsController : ControllerBase
                 .Include(x => x.LikedProjects)
                 .FirstOrDefaultAsync(x => x.Id == userId);
 
-            return Ok(new ProjectInfoResponse()
-            {
-                AuthorID = project.AuthorID,
-                Comments = project.Comments,
-                Description = project.Description,
-                GithubLink = project.GithubLink,
-                Likes = project.Likes,
-                Name = project.Name,
-                Photo = project.Photo,
-                Technologies = project.Technologies,
-                Id = project.Id,
-                IsLiked = user.LikedProjects.FirstOrDefault(x => x.ProjectId == project.Id) != null
-            });
+            projectInfo.IsLiked = user.LikedProjects.FirstOrDefault(x => x.ProjectId == project.Id) != null;
+
         }
 
-        return Ok(project);
+        return Ok(projectInfo);
     }
 
     [AllowAnonymous]
