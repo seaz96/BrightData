@@ -126,24 +126,10 @@ Response body:
   "githubLink": null,
   "likes": 0,
   "photo": null,
-  "id": "0"
-}
-```
-
-Если пользователь авторизован:
-Response body:
-```
-{
-  "authorID": "0",
-  "name": "string",
-  "description": "string",
-  "technologies": [],
-  "comments": [],
-  "githubLink": null,
-  "likes": 0,
-  "photo": null,
   "id": "0",
-  "isLiked" : false
+  "isLiked" : false,
+  "authorLogin": "login",
+  "authorName": "name"
 }
 ```
 
