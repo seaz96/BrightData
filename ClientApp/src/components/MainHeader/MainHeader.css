@@ -1,0 +1,11 @@
+.ant-dropdown-menu-item-icon {
+    width: 15px !important;
+    height: 15px !important;
+    margin-right: 7px !important;
+}
+
+.ant-dropdown-menu-item-icon > svg {
+    width: 15px !important;
+    height: 15px !important;
+    margin-right: 7px !important;
+}

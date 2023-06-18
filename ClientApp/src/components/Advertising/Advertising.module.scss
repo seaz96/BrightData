@@ -1,0 +1,71 @@
+@import 'styles/variables.scss';
+
+.advertising {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 20px;
+    padding: 20px;
+    
+    &__logoText {
+        margin: 0 auto;
+    }
+
+    &__contentContainer {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__text {
+        font-family: $mainFontFamily;
+        font-weight: 500;
+        font-size: 17px;
+        line-height: 21px;
+    }
+
+    &__joinButton {
+        width: 300px;
+        height: 62px;
+
+        margin-top: 20px;
+
+        font-family: $mainFontFamily;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22px;
+        color: #FFFFFF;
+
+        background: #2E3192;
+        border-radius: 0;
+        border: 0;
+
+        cursor: pointer;
+    }
+}
+
+@media (min-width: 786px) {
+    .advertising {
+        margin-top: 0;
+        padding-top: 80px;
+        padding-bottom: 80px;
+
+        &__contentContainer {
+            flex-direction: row;
+            justify-content: end;
+
+            margin-top: 40px;
+        }
+
+        &__text {
+            width: 57%;
+
+            margin-right: 75px;
+        }
+    }
+}
+
+@media (min-width: 1224px) {
+    .advertising__text {
+        margin-right: 150px;
+    }
+}

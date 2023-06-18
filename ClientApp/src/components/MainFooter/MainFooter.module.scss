@@ -1,0 +1,128 @@
+@import 'styles/variables.scss';
+
+.mainFooter {
+    margin-top: 20px;
+    padding: 0 20px 20px 20px;
+
+    &__top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__logoContainer {
+        display: flex;
+        align-items: center;
+
+        img {
+            width: 82.2px;
+            height: 30px;
+        }
+    }
+
+    &__authButton {
+        display: flex;
+
+        font-family: $mainFontFamily;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19.5px;
+
+        background-color: inherit;
+        box-shadow: none;
+        border: 0;
+
+        svg {
+            width: 16px;
+            height: 16px;
+
+            margin-right: 6.7px;
+        }
+
+        & > div {
+            display: none;
+        }
+    }
+
+    &__userDropdown {
+
+        ul {
+            border-radius: 0 !important;
+        } 
+
+        li {
+            font-family: $mainFontFamily;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 20px;
+
+            &:nth-child(1) {
+                color: #EC008C !important;
+            }
+
+            &:nth-child(3) {
+                color: #6B6B6B !important;
+            }
+        }
+    }
+
+    &__linksList {
+        margin-top: 15px;
+
+        font-family: $mainFontFamily;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 15px;
+        color: #6B6B6B;
+    }
+
+    &__link {
+        margin-top: 5px;
+    }
+
+    &__copyright {
+        margin-top: 20px;
+
+        font-family: $mainFontFamily;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 15px;
+        color: #6B6B6B;
+    }
+}
+
+@media (min-width: 786px) {
+    .mainFooter {
+
+        &__logoContainer {
+
+            img {
+                width: 137px;
+                height: 50px;
+            }
+        }
+
+        &__bottom {
+            display: flex;
+            align-items: center;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+
+            margin-top: 30px;
+        }
+
+        &__linksList {
+            display: flex;
+            margin-top: 0;
+            column-gap: 30px;
+        }
+
+        &__link {
+            margin-top: 0;
+        }
+    
+        &__copyright {
+            margin-top: 0;
+        }
+    }
+}

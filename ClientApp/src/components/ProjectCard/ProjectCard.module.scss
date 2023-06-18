@@ -1,0 +1,109 @@
+@import 'styles/variables.scss';
+
+.projectCard {
+
+    background-color: #fff;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+ 
+        padding: 10px 15px;
+    }
+
+    &__person {
+        display: flex;
+        align-items: center;
+    }
+
+    &__personImg {
+        margin-right: 6.7px;
+    }
+
+    &__personName {
+        font-family: $mainFontFamily;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 17px;
+    }
+
+    &__likes {
+        display: flex;
+        align-items: center;
+
+        padding: 2px 10px;
+
+        font-family: $mainFontFamily;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 17px;
+
+        border: 0;
+
+        span {
+            margin-right: 5.7px;
+        }
+
+        &:hover {
+            color: #000 !important;
+
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        &:active {
+            color: #EC008C !important;
+        }
+
+        & > div {
+            display: none;
+        }
+    }
+
+    &__likes_liked {
+        color: #EC008C !important;
+
+        &:hover {
+            color: #EC008C !important;
+        }
+
+        &:active {
+            color: #000 !important;
+        }
+    }
+
+    &__logo {
+        width: 100%;
+    }
+
+    &__infoContainer {
+        padding: 15px;
+    }
+
+    &__link {
+        display: flex;
+        align-items: center;
+    }
+
+    &__linkImg {
+        margin-right: 5px;
+    }
+
+    &__linkText {
+        font-family: $mainFontFamily;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 16px;
+    }
+
+    &__text {
+        margin-top: 15px;
+
+        font-family: $mainFontFamily;
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 18px;
+    }
+
+   
+}

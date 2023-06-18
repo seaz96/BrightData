@@ -1,0 +1,39 @@
+@import 'styles/variables.scss';
+
+.profileCard {
+    width: 310px;
+
+    padding: 20px;
+
+    background-color: #fff;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-family: $mainFontFamily;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.description {
+    margin: 20px 0px 20px 0;
+
+    font-family: $mainFontFamily;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.footer {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+}

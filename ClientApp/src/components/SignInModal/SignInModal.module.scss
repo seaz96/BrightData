@@ -1,0 +1,102 @@
+@import 'styles/variables.scss';
+
+.modal {
+    width: 420px !important;
+    max-width: 100%;
+
+    font-family: $mainFontFamily;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+
+    & > div {
+        border-radius: 0 !important;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__formItem {
+        margin-bottom: 20px;
+    }
+
+    &__input {
+        font-family: $mainFontFamily;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 20px;
+
+        border-radius: 0;
+        border: 0;
+        border-bottom: 1.5px solid #231F20;
+    }
+
+    &__forgotPasswordButton {
+        align-self: flex-start;
+
+        padding: 0;
+
+        font-family: $mainFontFamily;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 16px;
+        color: #6B6B6B;
+
+
+        border: 0;
+        box-shadow: none;
+
+        & > div {
+            display: none;
+        }
+    }
+
+    &__submitButton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        height: 62px;
+        width: 100%;
+
+        margin-top: 20px;
+
+        font-family: $mainFontFamily;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22px;
+        color: #fff;
+
+        background: #2E3192;
+        border-radius: 0; 
+    }
+
+    &__bottomLink {
+        text-align: center;
+    }
+
+    &__openSignUpButton {
+        display: inline-block;
+        align-self: center;
+
+        height: auto;
+
+        margin-top: 11px;
+        padding: 0;
+        padding-left: 3px;
+
+        font-family: $mainFontFamily;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 16px;
+        color: #2E3192;
+
+        border: 0;
+
+        span {
+            text-decoration: underline;
+        }
+    }
+}

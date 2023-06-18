@@ -1,0 +1,11 @@
+.ant-input-prefix {
+    margin-right: 11px !important;
+}
+
+.ant-form {
+    margin-top: 40px;
+}
+
+.ant-input-affix-wrapper:focus {
+    box-shadow: none !important;
+}

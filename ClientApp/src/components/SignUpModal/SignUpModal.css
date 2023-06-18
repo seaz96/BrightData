@@ -1,0 +1,29 @@
+.ant-input-prefix {
+    margin-right: 11px !important;
+}
+
+.ant-form {
+    margin-top: 40px;
+}
+
+.ant-input-affix-wrapper:focus {
+    box-shadow: none !important;
+    border-top: 0;
+    border-left: 0t;
+    border-right: 0;
+}
+
+.ant-input-affix-wrapper:hover {
+    box-shadow: none !important;
+    border-top: 0; 
+    border-left: 0;
+    border-right: 0;
+}
+
+.ant-input-affix-wrapper-focused {
+    box-shadow: none !important;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom-color: #4096ff;
+}

@@ -1,0 +1,14 @@
+.technologyStackList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    margin-top: 15px;
+}
+
+.technologyStackItem {
+    padding: 4px 15px;
+
+    background: #D9D9D9;
+    border-radius: 50px;
+}

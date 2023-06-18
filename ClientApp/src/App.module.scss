@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1340px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.app {
+    display: flex;
+    background-color: #D9D9D9;
+    min-height: 100vh;
+}
+
+.content {
+    flex-grow: 1;
+}

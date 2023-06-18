@@ -1,0 +1,116 @@
+@import 'styles/variables.scss';
+
+.modal {
+    width: 420px !important;
+    max-width: 100%;
+
+    font-family: $mainFontFamily;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+
+    & > div {
+        border-radius: 0 !important;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__profileHeader {
+        margin-bottom: 20px;
+
+        font-family: $mainFontFamily;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 17px;
+        letter-spacing: 0em;
+        text-align: left;
+    }
+
+    &__ArticleInfoHeader {
+        margin-top: 40px;
+        margin-bottom: 20px;
+
+        font-family: $mainFontFamily;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 17px;
+        letter-spacing: 0em;
+        text-align: left;
+    }
+
+    &__formItem {
+        margin-bottom: 20px;
+    }
+
+    &__input {
+        font-family: $mainFontFamily;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 20px;
+
+        border-radius: 0;
+        border: 0;
+        border-bottom: 1.5px solid #231F20;
+
+        span,
+        input {
+            font-family: $mainFontFamily !important;
+            font-weight: 500 !important;
+            font-size: 15px !important;
+            border: 0;
+        }
+
+        &>div {
+            border: 0 !important;
+        }
+    }
+
+    &__resetPasswordButton {
+        margin-top: 15px;
+        padding-left: 0;
+
+        font-family: $mainFontFamily;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 20px;
+
+        color: #6B6B6B;
+
+        border: 0;
+        text-align: left;
+    }
+
+    &__submitButton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        height: 62px;
+        width: 100%;
+
+        margin-top: 20px;
+
+        font-family: $mainFontFamily;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22px;
+        color: #fff;
+
+        background: #2E3192;
+        border-radius: 0; 
+    }
+
+    &__underLabel {
+        font-family: $mainFontFamily;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 16px;
+        letter-spacing: 0em;
+        text-align: left;
+
+    }
+}
