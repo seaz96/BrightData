@@ -52,13 +52,13 @@ public class ProjectsController : ControllerBase
 
     [Authorize]
     [HttpPost("delete")]
-    public async Task<ActionResult> DeleteProject([FromBody] string projectId)
+    public async Task<ActionResult> DeleteProject([FromBody] DeleteProjectRequest request)
     {
         var userId = HttpContext.User.FindFirstValue("id");
         var project = await _context.Projects
             .Include(x => x.Comments)
             .Include(x => x.Technologies)
-            .FirstOrDefaultAsync(x => x.Id == projectId);
+            .FirstOrDefaultAsync(x => x.Id == request.projectId);
 
         if (project.AuthorID != userId)
         {
@@ -98,10 +98,10 @@ public class ProjectsController : ControllerBase
 
     [Authorize]
     [HttpPost("update")]
-    public async Task<ActionResult> UpdateProject([FromBody] ProjectUpdateRequest request, string projectId)
+    public async Task<ActionResult> UpdateProject([FromBody] ProjectUpdateRequest request)
     {
         var userId = HttpContext.User.FindFirstValue("id");
-        var project = await _context.Projects.FindAsync(projectId);
+        var project = await _context.Projects.FindAsync(request.ProjectId);
 
         if (userId != project!.AuthorID)
         {
