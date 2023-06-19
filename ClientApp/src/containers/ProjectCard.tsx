@@ -7,49 +7,30 @@ import { userStore } from 'store';
 
 interface ProjectCardProps 
 {
-  likeState?: boolean,
   authorID: string,
   name: string,
-  description: string,
   technologies: Array<Technology>,
   githubLink: string,
   likes: number,
   photo: string,
-  id: number
+  id: string
+  isLiked : boolean,
+  authorLogin: string,
+  authorName: string
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
-  likeState,
   authorID,
   name,
-  description,
   technologies,
   githubLink,
   likes,
   photo,
-  id
+  id,
+  isLiked,
+  authorLogin,
+  authorName
 }) => {
-    const [user, setUser] = useState(null)
-    
-    async function getUser()  {
-      try {
-        const { data, status } = await axios.get(
-          'http://localhost:5000/api/users/id/' + authorID
-        );
-
-        if(!user) setUser(data);
-        return data;
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          console.log(error);
-          return null;
-        } else {
-          console.log('unexpected error: ', error);
-          return null;
-        }
-      }
-    } 
-
     async function likeProject()  {
       try {
         const { data, status } = await axios.post(
@@ -102,31 +83,49 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       }
     } 
 
-    
+    async function deleteProject() {
+      try {
+        const { data, status } = await axios.post(
+          'http://localhost:5000/api/Projects/delete',
+          {
+            projectId: String(id)
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + userStore.currentUser.token
+            }
+          }
+        );
 
-    useEffect(() => {
-        getUser()
-    })
+        return data;
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          console.log(error);
+          return null;
+        } else {
+          console.log('unexpected error: ', error);
+          return null;
+        }
+      }
+    }
 
-
-    if(user) {
-        return (
-            <BaseCard
-                likeState={likeState}
-                authorID={authorID}
-                authorName={user.name ? user.name : user.login}
-                name={name}
-                description={description}
-                technologies={technologies}
-                githubLink={githubLink}
-                likes={likes}
-                photo={photo}
-                id={id}
-                likeProject={likeProject}
-                dislikeProject={dislikeProject}
-            />
-        )
-    } 
+    return (
+        <BaseCard
+            name={name}
+            technologies={technologies}
+            githubLink={githubLink}
+            likes={likes}
+            authorID={authorID}
+            photo={photo}
+            id={id}
+            isLiked={isLiked}
+            authorName={authorName}
+            authorLogin={authorLogin}
+            likeProject={likeProject}
+            dislikeProject={dislikeProject}
+            deleteProject={deleteProject}
+        />
+    )
 }
 
 export default ProjectCard;

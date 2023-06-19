@@ -1,71 +1,110 @@
 import React, { useState } from 'react'
-import { Button } from 'antd';
-import { HeartOutlined, HeartFilled, UserOutlined } from '@ant-design/icons';
+import { Button, Dropdown, MenuProps } from 'antd';
+import { HeartOutlined, HeartFilled, UserOutlined, EllipsisOutlined, CloseOutlined, EditOutlined } from '@ant-design/icons';
 import { TechnologiesList } from 'components';
+import { UpdateProjectModal } from 'containers';
 
 import styles from './ProjectCard.module.scss';
-import Link from 'assets/Link.svg';
+import LinkIcon from 'assets/Link.svg';
 import classNames from 'classnames';
 import { Technology } from 'Types';
+import { userStore } from 'store';
+import { Link, useLocation } from 'react-router-dom';
 
 
 interface ProjectCardProps 
 {
-  likeState?: boolean,
-  authorID: string,
   name: string,
-  description: string,
+  authorID: string,
   technologies: Array<Technology>,
   githubLink: string,
   likes: number,
   photo: string,
-  authorName: string,
   likeProject: Function,
   dislikeProject: Function,
-  id: number
+  id: string,
+  isLiked : boolean,
+  authorLogin: string,
+  authorName: string,
+  deleteProject: Function
 }
 
+
+
 const ProjectCard: React.FC<ProjectCardProps> = ({
-  likeState,
-  authorID,
   name,
-  description,
   technologies,
+  authorID,
   githubLink,
   likes,
   photo,
-  authorName,
   likeProject,
   dislikeProject,
-  id
+  id,
+  isLiked,
+  authorLogin,
+  deleteProject,
+  authorName
 }) => {
-  const [isLiked, setIsLiked] = useState(likeState);
+  const [likeState, setlikeState] = useState(isLiked);
+  const [isUpdateProjectModalOpen, setUpdateProjectModalOpen] = useState(false);
+
+  const isInProfile = useLocation().pathname === "/profile/" + authorID;
+
+  const dropdownItems: MenuProps['items'] = [
+    {
+      key: '1',
+      icon: <CloseOutlined />,
+      label: "Удалить проект",
+      onClick: () => deleteProject()
+    },
+    {
+      key: '2',
+      icon: <EditOutlined />,
+      label: "Редактировать проект",
+      onClick: () => setUpdateProjectModalOpen(true)
+    }
+  ];
 
   return (
+    <>
     <article className={styles.projectCard}>
       <header className={styles.projectCard__header}>
-        <p className={styles.projectCard__person}>
+        <Link to={'/profile/' + authorID} className={styles.projectCard__person}>
           <UserOutlined className={styles.projectCard__personImg} alt='person'/>
-          <span className={styles.projectCard__personName}>{authorName}</span>
-        </p>
+          <span className={styles.projectCard__personName}>{authorName ? authorName : authorLogin}</span>
+        </Link>
         <Button 
-          className={classNames(styles.projectCard__likes, isLiked ? styles.projectCard__likes_liked : '')}
-          icon={isLiked ? <HeartFilled /> : <HeartOutlined />}
+          className={classNames(styles.projectCard__likes, likeState ? styles.projectCard__likes_liked : '')}
+          icon={likeState ? <HeartFilled /> : <HeartOutlined />}
+          disabled={userStore.currentUser ? false : true}
           onClick={() => {
-            if(!isLiked) likeProject(id)
+            if(!likeState) likeProject(id)
             else dislikeProject(id)
-            setIsLiked(!isLiked)
+            setlikeState(!likeState)
           }}
         >
-          {isLiked ? likes + 1 : likes}
+          {likeState ? likes + 1 : likes}
         </Button>
+        {isInProfile && userStore.currentUser && authorID === userStore.currentUser.id && 
+        <Dropdown 
+          menu={{ items: dropdownItems }}  
+          trigger={['click']} 
+          overlayClassName={styles.mainHeader__userDropdown}
+        >
+          <Button 
+            icon={<EllipsisOutlined />}
+            className={styles.projectCard__actionButton}
+          />
+        </Dropdown>
+        }
       </header>
       <main>
         <img src={photo} className={styles.projectCard__logo} alt='project logo'/>
         <div className={styles.projectCard__infoContainer}>
           <p className={styles.projectCard__link}>
-            <img src={Link} className={styles.projectCard__linkImg} alt='project link'/>
-            <a href='/' className={styles.projectCard__linkText}>{githubLink}</a>
+            <img src={LinkIcon} className={styles.projectCard__linkImg} alt='project link'/>
+            <a href='https://' className={styles.projectCard__linkText}>{githubLink}</a>
           </p>
           <p className={styles.projectCard__text}>
             {name}
@@ -74,6 +113,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         </div>
       </main>
     </article>
+    <UpdateProjectModal 
+      name={name}
+      technologies={technologies}
+      projectId={id} 
+      githubLink={githubLink}
+      photo={photo}
+      isOpen={isUpdateProjectModalOpen} 
+      setIsOpen={setUpdateProjectModalOpen} 
+    />
+    </>
   )
 }
 

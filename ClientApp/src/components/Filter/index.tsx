@@ -14,6 +14,50 @@ const Filter:React.FC<FilterProps> = ({setTechnologiesFilter}) => {
   {
     label: 'Javascript',
     value: 'Javascript'
+  },
+  {
+    label: 'Rust',
+    value: 'Rust'
+  },
+  {
+    label: 'C++',
+    value: 'C++'
+  },
+  {
+    label: 'C',
+    value: 'C'
+  },
+  {
+    label: 'C#',
+    value: 'C#'
+  },
+  {
+    label: 'Python',
+    value: 'Python'
+  },
+  {
+    label: 'Java',
+    value: 'Java'
+  },
+  {
+    label: 'Go',
+    value: 'Go'
+  },
+  {
+    label: 'Kotlin',
+    value: 'Kotlin'
+  },
+  {
+    label: 'Typesript',
+    value: 'Typesript'
+  },
+  {
+    label: 'Cobol',
+    value: 'Cobol'
+  },
+  {
+    label: 'Haskell',
+    value: 'Haskell'
   }];
 
   const sortOptions: SelectProps['options'] = [

@@ -8,7 +8,10 @@ type Project = {
     "githubLink": string,
     "likes": number,
     "photo": string,
-    "id": number
+    "id": string
+    "isLiked" : boolean,
+    "authorLogin": string,
+    "authorName": string
 }
 
 export default Project;

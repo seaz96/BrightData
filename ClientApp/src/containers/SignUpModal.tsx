@@ -25,6 +25,7 @@ const SignUpModal: React.FC<SignUpModalProps> = ({isOpen, setIsOpen, openSignIn}
               },
             );
             
+            localStorage.setItem('user', JSON.stringify(data))
             userStore.setCurrentUser(data)
             setIsOpen(false)
             

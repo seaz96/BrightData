@@ -15,7 +15,7 @@ const ProjectsList: React.FC<ProjectListProps> = ({projects, technologiesFilter}
   if(technologiesFilter.length) {
     filteredProjects = projects.filter(project => IsProjectContainsFilteredStack(technologiesFilter, project))
   }
-
+console.log(projects, filteredProjects)
   return (
     <section className={styles.projectsList}>
         <ul className={styles.projectsList__list}>

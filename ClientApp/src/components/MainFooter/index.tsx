@@ -10,33 +10,6 @@ import type { User } from 'Types';
 import { Link } from 'react-router-dom';
 import { userStore } from 'store';
 
-
-const dropdownItems: MenuProps['items'] = [
-    {
-      key: '1',
-      icon: <PlusOutlined />,
-      label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-          Разместить проект
-        </a>
-      ),
-    },
-    {
-      key: '2',
-      icon: <UserOutlined />,
-      label: (
-        <Link to="/profile">
-          Мой профиль
-        </Link>
-      ),
-    },
-    {
-      key: '3',
-      icon: <img src={Exit} alt='exit'/>,
-      label: 'Выйти',
-    },
-  ];
-
 interface MainFooterProps {
     user?: User,
     openSignUpModal: Function,
@@ -59,7 +32,7 @@ export default function MainFooter({
       key: '2',
       icon: <UserOutlined />,
       label: (
-        <Link to="/profile">
+        <Link to={"/profile/" + user?.id}>
           Мой профиль
         </Link>
       ),

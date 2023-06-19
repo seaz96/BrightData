@@ -34,7 +34,7 @@ export default function MainHeader({
       key: '2',
       icon: <UserOutlined />,
       label: (
-        <Link to="/profile">
+        <Link to={"/profile/" + user?.id}>
           Мой профиль
         </Link>
       ),

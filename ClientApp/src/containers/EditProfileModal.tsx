@@ -35,7 +35,7 @@ const EditProfileModal:React.FC<EditProfileModalProps> = ({isOpen, setIsOpen, se
             }
           );    
 
-          userStore.setUserData(values)
+          userStore.setUserData({...userStore.userData, ...values})
         } catch (error) {
           if (axios.isAxiosError(error)) {
             console.log(error);

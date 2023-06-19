@@ -7,7 +7,6 @@
     &__header {
         display: flex;
         align-items: center;
-        justify-content: space-between;
  
         padding: 10px 15px;
     }
@@ -22,6 +21,7 @@
     }
 
     &__personName {
+
         font-family: $mainFontFamily;
         font-size: 14px;
         font-weight: 500;
@@ -33,6 +33,7 @@
         align-items: center;
 
         padding: 2px 10px;
+        margin-left: auto;
 
         font-family: $mainFontFamily;
         font-size: 14px;
@@ -70,6 +71,10 @@
         &:active {
             color: #000 !important;
         }
+    }
+
+    &__actionButton {
+        border: none;
     }
 
     &__logo {

@@ -2,17 +2,22 @@ import React from 'react'
 import { Button, Form, Input, Modal, Select, SelectProps } from 'antd';
 import { CameraFilled } from '@ant-design/icons';
 
-import styles from "./AddNewProjectModal.module.scss";
+import styles from "./UpdateProjectModal.module.scss";
 import LinkIcon from "assets/Link.svg";
 import TextIcon from "assets/Text.svg";
+import { Technology } from 'Types';
 
-interface AddNewProjectModalProps {
+interface UpdateProjectModalProps {
     isOpen: boolean,
     setIsOpen: Function,
-    submitFunction: Function
+    submitFunction: Function,
+    name: string,
+    photo: string,
+    githubLink: string,
+    technologies: Array<Technology>
 }
 
-  const stackOptions: SelectProps['options'] = [
+const stackOptions: SelectProps['options'] = [
   {
     label: 'Javascript',
     value: 'Javascript'
@@ -62,16 +67,26 @@ interface AddNewProjectModalProps {
     value: 'Haskell'
   }];
 
-const AddNewProjectModal: React.FC<AddNewProjectModalProps> = ({isOpen, setIsOpen, submitFunction}) => {
+const UpdateProjectModal: React.FC<UpdateProjectModalProps> = ({isOpen, setIsOpen, submitFunction, name,
+  photo,
+  githubLink,
+  technologies}) => {
   return (
     <Modal 
         open={isOpen}
         onCancel={() => setIsOpen(false)}
         footer={null}
-        title='Новый пост'
+        title='Редактировать пост'
         className={styles.modal}
     >
-        <Form className={styles.modal__form} onFinish={(values: any) => submitFunction(values)}>
+        <Form className={styles.modal__form} onFinish={(values: any) => submitFunction(values)}
+          initialValues={{
+            name: name,
+            githubLink: githubLink,
+            technologies: technologies,
+            photo: photo
+          }}
+        >
             <b className={styles.modal__profileHeader}>О проекте</b>
             <Form.Item 
               className={styles.modal__formItem}
@@ -137,4 +152,4 @@ const AddNewProjectModal: React.FC<AddNewProjectModalProps> = ({isOpen, setIsOpe
   )
 }
 
-export default AddNewProjectModal;
+export default UpdateProjectModal;

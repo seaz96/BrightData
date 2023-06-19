@@ -121,6 +121,7 @@ const EditProfileModel: React.FC<EditProfileModalProps> = ({isOpen, userData, se
               <Button
                 className={styles.modal__submitButton}
                 htmlType='submit'
+                onClick={() => setIsOpen(false)}
               >
                 Сохранить
               </Button>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import styles from './App.module.scss';
@@ -15,13 +15,21 @@ function App() {
   const [isNewPasswordAcceptedModalVisible, setNewPasswordAcceptedModalVisibility] = useState(false);
   const [isAddProjectModalVisible, setAddProjectModalVisibility] = useState(false);
 
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      userStore.setCurrentUser(foundUser);
+    }
+  }, [])
+
   return (
   <div className={styles.app}>
     <div className={styles.container}>
       <MainHeader openSignUpModal={setSignInModalVisibility} user={userStore.currentUser} openAddProjectModal={setAddProjectModalVisibility}/>
       <div className={styles.content}></div>
       <Routes>
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:id" element={<Profile />} />
         <Route path="*" element={<Home setSignUpModalVisibility={setSignInModalVisibility} 
         setAddProjectModalVisibility={setAddProjectModalVisibility}/>} />
       </Routes>

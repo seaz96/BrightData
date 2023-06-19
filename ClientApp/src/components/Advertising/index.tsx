@@ -26,16 +26,26 @@ export default function Advertising({
                 получай новые идеи и решения для своих проектов. 
                 Присоединяйся к нам и становись частью сообщества бесконечных возможностей!
             </p>
-            <button 
-              className={styles.advertising__joinButton} 
-              onClick={() => {
-                userStore.currentUser ? 
-                openSignUpModal(true) :
-                setAddProjectModalVisibility(true)
-              }}
-            >
-              Присоединяйся
-            </button>
+            {
+              userStore.currentUser ? 
+              <button 
+                className={styles.advertising__projectButton} 
+                onClick={() => {
+                  setAddProjectModalVisibility(true)            
+                }}
+              >
+                Разместить проект
+              </button>
+              :
+              <button 
+                className={styles.advertising__joinButton} 
+                onClick={() => {
+                  openSignUpModal(true)            
+                }}
+              >
+                Присоединяйся
+              </button>
+            }    
         </div>
     </section>
   )

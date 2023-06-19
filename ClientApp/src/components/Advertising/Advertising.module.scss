@@ -41,6 +41,25 @@
 
         cursor: pointer;
     }
+
+    &__projectButton {
+        width: 300px;
+        height: 62px;
+
+        margin-top: 20px;
+
+        font-family: $mainFontFamily;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22px;
+        color: #FFFFFF;
+
+        background: #EC008C;
+        border-radius: 0;
+        border: 0;
+
+        cursor: pointer;
+    }
 }
 
 @media (min-width: 786px) {

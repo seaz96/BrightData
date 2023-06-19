@@ -13,4 +13,5 @@ export {default as NewPasswordAcceptedModal} from './NewPasswordAcceptedModal';
 export {default as PasswordChangeModal} from './PasswordChangeModal';
 export {default as EditProfileModal} from './EditProfileModal';
 export {default as AddNewProjectModal} from './AddNewProjectModal';
+export {default as UpdateProjectModal} from './UpdateProjectModal';
 export {default as Loader} from './Loader';
