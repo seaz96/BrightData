@@ -155,6 +155,7 @@ Request body:
 Request body:
 ```
 {
+  "projectId": "string",
   "name": "string",
   "description": "string",
   "technologies": [
@@ -174,7 +175,7 @@ Request body:
 Request body:
 ```
 {
-    "projectId
+    "projectId" : "id"
 }
 ```
 
